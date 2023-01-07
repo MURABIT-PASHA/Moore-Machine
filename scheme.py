@@ -59,22 +59,20 @@ class Scheme:
                         self.body_list.append(new_state)
         table_button = Button(master=self.frame, text="Create Diagram", command=self.create_table)
         table_button.grid(column=self.column_amount-1, row=self.row_amount)
-    def create_table(self):
+    def create_table(self) -> dict:
         moore_table = {}
-        k = 0
-        m = 0
-        for n in range(self.row_amount):
-            for o in range(self.column_amount):
-                if n is 0:
-                    pass
-                else:
-                    if o is 0:
-                        pass
-                    elif o is self.column_amount - 1:
-                        with open(self.directory + "\\output.txt", "a") as output_file:
-                            output_file.write(f"{self.output_list[m].get()}\n")
-                            m = m + 1
-                    else:
-                        # self.body_list[k].get()
-                        # k = k + 1
-                        pass
+        body_list = []
+        output_list = []
+        body_index = 0
+        for state in self.body_list:
+            body_list.append(state.get())
+        for output in self.output_list:
+            output_list.append(output.get())
+        for init in range(int(self.states)):
+            moore_table[f'q{init}'] = {}
+        for _ in range(int(self.states)):
+            for index in range(len(self.alphabet_list)):
+                moore_table[f'q{_}'][self.alphabet_list[index]] = body_list[body_index+index]
+            body_index += len(self.alphabet_list)
+            moore_table[f'q{_}']['output'] = output_list[_]
+        return moore_table
