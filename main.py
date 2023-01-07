@@ -1,16 +1,11 @@
 import io
 import webview
-import PIL.Image, PIL.ImageTk
 import cairosvg as cairosvg
 from scheme import *
 
 
 window = Tk()
-
-
 window.title("Moore Machine")
-
-
 window.geometry("1280x720")
 window.config(pady=15, padx=15,background="#7F7FFF")
 

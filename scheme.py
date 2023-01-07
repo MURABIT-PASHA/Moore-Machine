@@ -2,6 +2,9 @@ from tkinter import *
 import os
 from tkinter import ttk
 
+import PIL.Image, PIL.ImageTk
+
+from diagram import *
 class Scheme:
     def __init__(self, alphabet:str, states:str, master:Tk, main_frame:Frame):
         """
@@ -24,12 +27,14 @@ class Scheme:
         self.body_list = []
         self.output_list = []
         self._recreate_frame()
+
+    def _clear_frame(self):
+        for widget in self.frame.winfo_children():
+            widget.destroy()
     def _recreate_frame(self):
         for _ in range(int(self.states)):
             self.state_list.append(f"q{_}")
-        for widget in self.frame.winfo_children():
-            widget.destroy()
-
+        self._clear_frame()
         for i in range(self.row_amount):
             for j in range(self.column_amount):
                 if i == 0:
@@ -57,9 +62,19 @@ class Scheme:
                         new_state = ttk.Combobox(master=self.frame, values=self.state_list)
                         new_state.grid(row=i, column=j)
                         self.body_list.append(new_state)
-        table_button = Button(master=self.frame, text="Create Diagram", command=self.create_table)
+        table_button = Button(master=self.frame, text="Create Diagram", command=self.create_diagram)
         table_button.grid(column=self.column_amount-1, row=self.row_amount)
-    def create_table(self) -> dict:
+
+    def create_diagram(self):
+        ImageDiagram(diagram=self._create_table(),state_number=int(self.states), alphabet=self.alphabet_list)
+        image = PIL.Image.open("moore.png")
+        new_image = image.resize((25, 25))
+        diagram_image = PIL.ImageTk.PhotoImage(new_image)
+        self._clear_frame()
+        label = Label(master=self.frame, image=diagram_image)
+        label.pack()
+
+    def _create_table(self) -> dict:
         moore_table = {}
         body_list = []
         output_list = []
