@@ -1,4 +1,0 @@
-durum	a	b	
-q0	q1	q1	
-q1	q1	q1	
-q2	q2	q0	
