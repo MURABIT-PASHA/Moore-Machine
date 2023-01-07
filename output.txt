@@ -1,0 +1,4 @@
+durum	output
+q0	4
+q1	5
+q2	6

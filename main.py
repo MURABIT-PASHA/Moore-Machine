@@ -1,30 +1,32 @@
+import io
 import os
 from tkinter import *
+import webview
 from tkinter import ttk
+from PIL import Image,ImageTk
+import cairosvg as cairosvg
 
-# Bu mevcut dizindir.
 directory = os.getcwd()
 
-# Kullanıcıdan input değerlerini alabileceğimiz bir pencere oluşturalım
 window = Tk()
 
-# Pencere başlığı
+
 window.title("Moore Machine")
 
-# Pencere boyutu
+
 window.geometry("1280x720")
-window.config(pady=15, padx=15)
+window.config(pady=15, padx=15,background="#7F7FFF")
 
 frame1 = Frame(master=window, highlightthickness=2, highlightbackground="blue")
-frame1.pack(anchor=NW)
-# Frame 1 içeriği:
-alphabet_label = Label(master=frame1, text="Alfabe giriniz: ")
+frame1.pack(anchor=N)
+
+alphabet_label = Label(master=frame1, text="Type your alphabet: ")
 alphabet_label.grid(row=0, column=0, padx=15, pady=15, sticky=W)
 
 alphabet_entry = Entry(master=frame1, highlightthickness=2, highlightbackground="blue")
 alphabet_entry.grid(row=0, column=1, padx=15, pady=15)
 
-state_label = Label(master=frame1, text="Durum sayısını giriniz: ")
+state_label = Label(master=frame1, text="Type your state number: ")
 state_label.grid(row=1, column=0, padx=15, pady=15, sticky=W)
 
 state_entry = Entry(master=frame1, highlightthickness=2, highlightbackground="blue")
@@ -48,11 +50,11 @@ def create_scheme(alphabet, states):
         for j in range(column_amount):
             if i == 0:
                 if j == 0:
-                    new_title = Label(master=frame2, text="Durumlar")
+                    new_title = Label(master=frame2, text="States")
                     new_title.grid(row=i, column=j)
                     title_list.append(new_title)
                 elif j == column_amount - 1:
-                    new_title = Label(master=frame2, text="Çıktılar")
+                    new_title = Label(master=frame2, text="Outputs")
                     new_title.grid(row=i, column=j)
                     title_list.append(new_title)
                 else:
@@ -179,13 +181,36 @@ def create_scheme(alphabet, states):
         image_frame = Frame(master=new_window, highlightthickness=1, highlightbackground="blue", height=200, width=400)
         image_frame.pack()
 
-    table_button = Button(master=frame2, text="Tabloyu oluştur", command=create_table)
+    table_button = Button(master=frame2, text="Create Diagram", command=create_table)
     table_button.grid(column=column_amount, row=row_amount)
 
 
-scheme_button = Button(master=frame1, text="Şema oluştur",
+
+scheme_button = Button(master=frame1, text="Create Scheme",
                        command=lambda: create_scheme(alphabet_entry.get(), state_entry.get()))
 scheme_button.grid(row=2, column=1, padx=15, pady=15, sticky=E)
 
-# Bu penceremizin açık kalmasını sağlar
+
+# Links
+image_data = cairosvg.svg2png(url="assets/buttons/linkedin.svg")
+image = Image.open(io.BytesIO(image_data))
+new_image = image.resize((25, 25))
+linkedin_image = ImageTk.PhotoImage(new_image)
+linkedin_button = Button(master=window,
+                       image=linkedin_image,
+                       command=lambda: open_web('https://www.linkedin.com/in/murabit-akdogan'))
+linkedin_button.pack()
+
+image_data = cairosvg.svg2png(url="assets/buttons/github.svg")
+image = Image.open(io.BytesIO(image_data))
+new_image = image.resize((25, 25))
+github_image = ImageTk.PhotoImage(new_image)
+github_button = Button(master=window,
+                       image=github_image,
+                       command=lambda: open_web('https://github.com/MURABIT-PASHA'))
+github_button.pack()
+def open_web(url):
+    webview.create_window('Murabıt Akdoğan', url)
+    webview.start()
+
 window.mainloop()
