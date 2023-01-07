@@ -66,9 +66,12 @@ class Scheme:
         table_button.grid(column=self.column_amount-1, row=self.row_amount)
 
     def create_diagram(self):
-        ImageDiagram(diagram=self._create_table(),state_number=int(self.states), alphabet=self.alphabet_list)
-        image = PIL.Image.open("moore.png")
-        new_image = image.resize((25, 25))
+        image_diagram = ImageDiagram(diagram=self._create_table(), state_number=int(self.states), alphabet=self.alphabet_list)
+        image = PIL.Image.open(image_diagram.get_image_path())
+        golden_ratio = (1 + pow(5, 1 / 2)) / 2
+        height = 400
+        width = int(height * golden_ratio)
+        new_image = image.resize((width, height))
         diagram_image = PIL.ImageTk.PhotoImage(new_image)
         self._clear_frame()
         label = Label(master=self.frame, image=diagram_image)
