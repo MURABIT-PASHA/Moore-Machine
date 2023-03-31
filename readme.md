@@ -57,7 +57,7 @@ If you would like to contribute to this project, please follow these guidelines:
 Support
 -------
 
-If you have any questions or encounter any issues while using this program, please open an issue on the [GitHub repository](insert link to repository here).
+If you have any questions or encounter any issues while using this program, please open an issue on the [GitHub repository](https://github.com/MURABIT-PASHA/Moore-Machine).
 
 Credits
 -------
@@ -67,4 +67,4 @@ This program was developed by Murabıt Akdoğan.
 License
 -------
 
-This project is licensed under the MIT License - see the [LICENSE](https://chat.openai.com/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/MURABIT-PASHA/Moore-Machine/blob/main/LICENSE) file for details.
